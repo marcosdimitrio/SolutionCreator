@@ -1,0 +1,13 @@
+﻿<Application x:Class="SolutionCreator.Wpf.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:ioc="clr-namespace:SolutionCreator.Wpf.DependencyInjection"
+             xmlns:mvvm="clr-namespace:SolutionCreator.Wpf.Commands"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SolutionCreator.Wpf"
+             Startup="Application_Startup">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ioc:NinjectServiceLocator x:Key="ServiceLocator" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
