@@ -46,6 +46,7 @@ namespace SolutionCreator.Tests
             [InlineData(@"d:\solution\Publish.xml")]                    // *.[Pp]ublish.xml
             [InlineData(@"d:\solution\~a$")]                            // ~$*
             [InlineData(@"d:\solution\a~a")]                            // *~
+            [InlineData(@"d:\solution\.gitignore")]                     // .git
             public void MustAcceptTheseFiles(string file)
             {
 
@@ -102,6 +103,8 @@ namespace SolutionCreator.Tests
             [InlineData(@"d:\solution\~")]                              // *~
             [InlineData(@"d:\solution\Abc~")]                           // *~
             [InlineData(@"d:\solution\packages\a")]                     // **/packages/*
+            [InlineData(@"d:\solution\.git")]                           // .git
+            [InlineData(@"d:\solution\.git\abc")]                       // .git
             public void MustRejectTheseFiles(string file)
             {
 
@@ -124,6 +127,10 @@ namespace SolutionCreator.Tests
             [InlineData(@"d:\solution\TestResults\")]                   // [Tt]est[Rr]esult*/
             [InlineData(@"d:\solution\DocProject\buildhelp\")]          // DocProject/buildhelp/
             [InlineData(@"d:\solution\packages\")]                      // **/packages/*
+            [InlineData(@"d:\solution\.git")]                           // .git
+            [InlineData(@"d:\solution\.git\")]                          // .git
+            [InlineData(@"d:\solution\.git\abc")]                       // .git
+            [InlineData(@"d:\solution\.git\abc\")]                      // .git
             public void MustRejectTheseFolders(string file)
             {
 
