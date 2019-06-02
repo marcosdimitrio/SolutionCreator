@@ -14,9 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Ninject;
-using Ninject.Activation;
-using Ninject.Modules;
+using SimpleInjector;
 using SolutionCreator.GitIgnore;
 using SolutionCreator.GuidReplaceService;
 using SolutionCreator.Infra.Settings;
@@ -26,47 +24,37 @@ using SolutionCreator.SolutionProcessor.Factory;
 using SolutionCreator.SolutionProcessor.Factory.Interfaces;
 using SolutionCreator.SolutionProcessor.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
 namespace SolutionCreator.IoC
 {
-    public class SolutionCreatorNinjectMappings : NinjectModule
+    public static class SolutionCreatorMappings
     {
 
-        public override void Load()
+        public static void RegisterServices(Container container, Lifestyle lifestyle)
         {
-            Bind<IFileCopy>().To<FileCopy>();
-            Bind<IGuidReplace>().To<GuidReplace>();
-            Bind<IGitIgnoreFilter>().To<GitIgnoreFilter>();
-            Bind<ICreator>().To<Creator>();
-            Bind<ISettingsReader>().To<SettingsReader>();
-            Bind<ISolutionProcessorFactory>().To<SolutionProcessorFactory>();
-            Bind<ISolutionProcessor>().To<SolutionProcessorMvc>();
+            container.Register<IFileCopy, FileCopy>(lifestyle);
+            container.Register<IGuidReplace, GuidReplace>(lifestyle);
+            container.Register<IGitIgnoreFilter, GitIgnoreFilter>(lifestyle);
+            container.Register<ICreator, Creator>(lifestyle);
+            container.Register<ISettingsReader, SettingsReader>(lifestyle);
+            container.Register<ISolutionProcessorFactory, SolutionProcessorFactory>(lifestyle);
+            container.Collection.Register<ISolutionProcessor>(typeof(SolutionProcessorMvc));
 
-            BindSettings();
+            BindSettingClasses(container, lifestyle);
         }
 
-        private IList<ISolutionProcessor> bindSolutionProcessors(IContext arg)
+        private static void BindSettingClasses(Container container, Lifestyle lifestyle)
         {
-            var processors = new List<ISolutionProcessor>();
-
-            return processors;
-        }
-
-        private void BindSettings()
-        {
-            var settings = Assembly.GetAssembly(typeof(SettingsReader))
+            var settingsClasses = Assembly.GetAssembly(typeof(SettingsReader))
                                 .GetTypes()
                                 .Where(t => t.Name.EndsWith("Settings", StringComparison.InvariantCulture))
                                 .ToList();
 
-            var settingsReader = Kernel.Get<ISettingsReader>();
-
-            settings.ForEach(type =>
+            settingsClasses.ForEach(type =>
             {
-                Bind(type).ToMethod(x => settingsReader.LoadSection(type));
+                container.Register(type, () => container.GetInstance<ISettingsReader>().LoadSection(type), lifestyle);
             });
         }
 

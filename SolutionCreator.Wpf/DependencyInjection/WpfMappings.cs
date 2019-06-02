@@ -14,24 +14,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using SolutionCreator.Wpf.Services.MessageExchange;
-using Ninject.Modules;
+using SimpleInjector;
 using SolutionCreator.Wpf.Services.Defaults;
 using SolutionCreator.Wpf.Services.IO;
+using SolutionCreator.Wpf.Services.MessageExchange;
 using SolutionCreator.Wpf.ViewModel;
 
 namespace SolutionCreator.Wpf.DependencyInjection
 {
-    public class WpfNinjectMappings : NinjectModule
+    public static class WpfMappings
     {
-        public override void Load()
+        public static void RegisterServices(Container container, Lifestyle lifestyle)
         {
-            Bind<IMessagingService>().To<MessagingService>();
-            Bind<IDefaultsService>().To<DefaultsService>();
-            Bind<IDialogServices>().To<DialogServices>();
+            container.Register<IMessagingService, MessagingService>(lifestyle);
+            container.Register<IDefaultsService, DefaultsService>(lifestyle);
+            container.Register<IDialogServices, DialogServices>(lifestyle);
 
             // ViewModels
-            Bind<MainWindowViewModel>().ToSelf();
+            container.Register<MainWindowViewModel>(lifestyle);
         }
     }
 }

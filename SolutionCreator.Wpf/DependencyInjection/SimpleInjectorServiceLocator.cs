@@ -14,37 +14,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using SolutionCreator.Wpf.ViewModel;
-using Ninject;
-using Ninject.Modules;
-using System.Collections.Generic;
+using SimpleInjector;
+using SimpleInjector.Lifestyles;
 using SolutionCreator.IoC;
-using Ninject.Planning.Bindings.Resolvers;
+using SolutionCreator.Wpf.ViewModel;
 
 namespace SolutionCreator.Wpf.DependencyInjection
 {
-    public class NinjectServiceLocator
+    public class SimpleInjectorServiceLocator
     {
-        private readonly IKernel Kernel;
+        private readonly Container Container;
 
-        public NinjectServiceLocator()
+        public SimpleInjectorServiceLocator()
         {
-            Kernel = new StandardKernel();
+            Container = new Container();
 
-            Kernel.Components.Remove<IMissingBindingResolver, SelfBindingResolver>();
+            var lifestyle = Lifestyle.Singleton;
 
-            var modules = new List<INinjectModule>
-            {
-                new WpfNinjectMappings(),
-                new SolutionCreatorNinjectMappings(),
-            };
+            InitializeContainer(Container, lifestyle);
 
-            Kernel.Load(modules);
+            Container.Verify();
+        }
+
+        private void InitializeContainer(Container container, Lifestyle lifestyle)
+        {
+            WpfMappings.RegisterServices(container, lifestyle);
+            SolutionCreatorMappings.RegisterServices(container, lifestyle);
         }
 
         public MainWindowViewModel MainWindowViewModel
         {
-            get { return Kernel.Get<MainWindowViewModel>(); }
+            get { return Container.GetInstance<MainWindowViewModel>(); }
         }
 
     }

@@ -14,8 +14,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using SolutionCreator.Dto;
-using SolutionCreator.GuidReplaceService;
 using SolutionCreator.SolutionProcessor.Factory.Interfaces;
 using System;
 using System.IO;

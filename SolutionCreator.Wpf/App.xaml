@@ -7,7 +7,7 @@
              Startup="Application_Startup">
     <Application.Resources>
         <ResourceDictionary>
-            <ioc:NinjectServiceLocator x:Key="ServiceLocator" />
+            <ioc:SimpleInjectorServiceLocator x:Key="ServiceLocator" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
