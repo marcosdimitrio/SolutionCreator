@@ -15,12 +15,18 @@
 // limitations under the License.
 
 using Ninject;
+using Ninject.Activation;
 using Ninject.Modules;
 using SolutionCreator.GitIgnore;
 using SolutionCreator.GuidReplaceService;
 using SolutionCreator.Infra.Settings;
 using SolutionCreator.Infra.Settings.Interfaces;
+using SolutionCreator.SolutionProcessor;
+using SolutionCreator.SolutionProcessor.Factory;
+using SolutionCreator.SolutionProcessor.Factory.Interfaces;
+using SolutionCreator.SolutionProcessor.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -36,8 +42,17 @@ namespace SolutionCreator.IoC
             Bind<IGitIgnoreFilter>().To<GitIgnoreFilter>();
             Bind<ICreator>().To<Creator>();
             Bind<ISettingsReader>().To<SettingsReader>();
+            Bind<ISolutionProcessorFactory>().To<SolutionProcessorFactory>();
+            Bind<ISolutionProcessor>().To<SolutionProcessorMvc>();
 
             BindSettings();
+        }
+
+        private IList<ISolutionProcessor> bindSolutionProcessors(IContext arg)
+        {
+            var processors = new List<ISolutionProcessor>();
+
+            return processors;
         }
 
         private void BindSettings()

@@ -31,14 +31,14 @@ namespace SolutionCreator.Wpf.Services.MessageExchange
         {
             var button = MessageBoxButton.OK;
 
-            MessageBox.Show(text, title, button, Map(image));
+            MessageBox.Show(Application.Current.MainWindow, text, title, button, Map(image));
 
             return true;
         }
 
         public MessagingResult Ask(string text, string title, MessagingButton messagingButton)
         {
-            var result = MessageBox.Show(text, title, Map(messagingButton));
+            var result = MessageBox.Show(Application.Current.MainWindow, text, title, Map(messagingButton));
 
             return Mapear(result);
         }

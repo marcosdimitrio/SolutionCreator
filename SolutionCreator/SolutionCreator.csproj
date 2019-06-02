@@ -58,6 +58,11 @@
     </Compile>
     <Compile Include="Dto\SolutionName.cs" />
     <Compile Include="Enum\TypeOfComparison.cs" />
+    <Compile Include="SolutionProcessor\Factory\Interfaces\ISolutionProcessorFactory.cs" />
+    <Compile Include="SolutionProcessor\Factory\SolutionProcessorFactory.cs" />
+    <Compile Include="SolutionProcessor\Interfaces\ISolutionProcessor.cs" />
+    <Compile Include="SolutionProcessor\Interfaces\SolutionProcessorType.cs" />
+    <Compile Include="SolutionProcessor\SolutionProcessorMvc.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ignorefile.txt" />

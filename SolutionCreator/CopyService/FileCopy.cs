@@ -23,7 +23,6 @@ namespace SolutionCreator
     // http://stackoverflow.com/questions/58744/copy-the-entire-contents-of-a-directory-in-c-sharp#690980
     public class FileCopy : IFileCopy
     {
-
         private readonly IGitIgnoreFilter GitIgnoreFilter;
 
         public FileCopy(IGitIgnoreFilter gitIgnoreFilter)
@@ -57,7 +56,6 @@ namespace SolutionCreator
                     {
                         fi.CopyTo(newPath, true);
                     }
-
                 }
 
                 // Copy each subdirectory using recursion.
