@@ -14,23 +14,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using SolutionCreator.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SolutionCreator.GitIgnore
+namespace SolutionCreator.GitIgnore.Filter
 {
-    public class GitIgnoreFilter : IGitIgnoreFilter
+    public abstract class GitIgnoreFilterTemplate : IGitIgnoreFilter
     {
 
         private IList<GitIgnoreRule> RuleList;
 
-        public GitIgnoreFilter()
+        protected abstract string GetIgnoreFile();
+        public abstract SolutionType SolutionType { get; }
+
+        public GitIgnoreFilterTemplate()
         {
             RuleList = GetGitIgnoreList();
         }
 
-        public bool Accepts(string filename, bool isFolder)
+        public bool AcceptsFile(string filename)
+        {
+            return Accepts(filename, false);
+        }
+
+        public bool AcceptsFolder(string foldername)
+        {
+            return Accepts(foldername, true);
+        }
+
+        private bool Accepts(string filename, bool isFolder)
         {
             //foreach (var rule in RuleList)
             //{
@@ -54,7 +68,8 @@ namespace SolutionCreator.GitIgnore
         private IList<GitIgnoreRule> GetGitIgnoreList()
         {
             var list = new List<GitIgnoreRule>();
-            var ignoreFile = Properties.Resources.ignorefile;
+
+            var ignoreFile = GetIgnoreFile();
 
             foreach (var item in ignoreFile.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
             {

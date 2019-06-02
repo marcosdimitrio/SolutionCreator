@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,11 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\FileProcessingProgressDto.cs" />
     <Compile Include="CopyService\FileCopy.cs" />
     <Compile Include="Creator.cs" />
-    <Compile Include="GitIgnore\GitIgnoreFilter.cs" />
+    <Compile Include="GitIgnore\Factory\GitIgnoreFilterFactory.cs" />
+    <Compile Include="GitIgnore\Factory\Interfaces\IGitIgnoreFilterFactory.cs" />
+    <Compile Include="GitIgnore\Filter\Angular\GitIgnoreFilterAngular.cs" />
+    <Compile Include="GitIgnore\Filter\GitIgnoreFilterTemplate.cs" />
+    <Compile Include="GitIgnore\Filter\Mvc\GitIgnoreFilterMvc.cs" />
     <Compile Include="GitIgnore\GitIgnoreRule.cs" />
-    <Compile Include="CopyService\IFileCopy.cs" />
+    <Compile Include="CopyService\Interfaces\IFileCopy.cs" />
     <Compile Include="GitIgnore\IGitIgnoreFilter.cs" />
     <Compile Include="Dto\ProjectGuid.cs" />
     <Compile Include="GuidReplaceService\GuidReplace.cs" />
@@ -57,18 +65,23 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Dto\SolutionName.cs" />
-    <Compile Include="Enum\TypeOfComparison.cs" />
+    <Compile Include="Enums\TypeOfComparison.cs" />
+    <Compile Include="SolutionNameReplacerService\Interfaces\ISolutionNameReplacer.cs" />
+    <Compile Include="SolutionNameReplacerService\SolutionNameReplacer.cs" />
     <Compile Include="SolutionProcessor\Factory\Interfaces\ISolutionProcessorFactory.cs" />
     <Compile Include="SolutionProcessor\Factory\SolutionProcessorFactory.cs" />
     <Compile Include="SolutionProcessor\Interfaces\ISolutionProcessor.cs" />
-    <Compile Include="SolutionProcessor\Interfaces\SolutionProcessorType.cs" />
-    <Compile Include="SolutionProcessor\SolutionProcessorMvc.cs" />
+    <Compile Include="Enums\SolutionType.cs" />
+    <Compile Include="SolutionProcessor\Processors\Angular\Dto\AngularJsonDto.cs" />
+    <Compile Include="SolutionProcessor\Processors\Angular\SolutionProcessorAngular.cs" />
+    <Compile Include="SolutionProcessor\Processors\Mvc\SolutionProcessorMvc.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ignorefile.txt" />
+    <EmbeddedResource Include="GitIgnore\Filter\Mvc\IgnoreFileMvc.txt" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +90,13 @@
       <Name>SolutionCreator.Helpers</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GitIgnore\Filter\Angular\IgnoreFileAngular.txt" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

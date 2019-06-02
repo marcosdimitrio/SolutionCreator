@@ -16,13 +16,22 @@
 
 using SimpleInjector;
 using SolutionCreator.GitIgnore;
+using SolutionCreator.GitIgnore.Factory;
+using SolutionCreator.GitIgnore.Factory.Interfaces;
+using SolutionCreator.GitIgnore.Filter;
+using SolutionCreator.GitIgnore.Filter.Angular;
+using SolutionCreator.GitIgnore.Filter.Mvc;
 using SolutionCreator.GuidReplaceService;
 using SolutionCreator.Infra.Settings;
 using SolutionCreator.Infra.Settings.Interfaces;
-using SolutionCreator.SolutionProcessor;
+using SolutionCreator.Interfaces;
+using SolutionCreator.SolutionNameReplacerService;
+using SolutionCreator.SolutionNameReplacerService.Interfaces;
 using SolutionCreator.SolutionProcessor.Factory;
 using SolutionCreator.SolutionProcessor.Factory.Interfaces;
 using SolutionCreator.SolutionProcessor.Interfaces;
+using SolutionCreator.SolutionProcessor.Processors.Angular;
+using SolutionCreator.SolutionProcessor.Processors.Mvc;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -36,11 +45,13 @@ namespace SolutionCreator.IoC
         {
             container.Register<IFileCopy, FileCopy>(lifestyle);
             container.Register<IGuidReplace, GuidReplace>(lifestyle);
-            container.Register<IGitIgnoreFilter, GitIgnoreFilter>(lifestyle);
             container.Register<ICreator, Creator>(lifestyle);
             container.Register<ISettingsReader, SettingsReader>(lifestyle);
             container.Register<ISolutionProcessorFactory, SolutionProcessorFactory>(lifestyle);
-            container.Collection.Register<ISolutionProcessor>(typeof(SolutionProcessorMvc));
+            container.Register<ISolutionNameReplacer, SolutionNameReplacer>(lifestyle);
+            container.Register<IGitIgnoreFilterFactory, GitIgnoreFilterFactory>(lifestyle);
+            container.Collection.Register<ISolutionProcessor>(typeof(SolutionProcessorAngular), typeof(SolutionProcessorMvc));
+            container.Collection.Register<GitIgnoreFilterTemplate>(typeof(GitIgnoreFilterAngular), typeof(GitIgnoreFilterMvc));
 
             BindSettingClasses(container, lifestyle);
         }

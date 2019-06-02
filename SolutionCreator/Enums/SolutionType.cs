@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 
-namespace SolutionCreator.SolutionProcessor.Interfaces
+namespace SolutionCreator.Enums
 {
-    public enum SolutionProcessorType
+    public enum SolutionType
     {
         [Description("ASP.NET MVC")]
         AspNetMvc,

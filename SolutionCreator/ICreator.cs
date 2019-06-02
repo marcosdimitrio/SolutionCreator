@@ -14,10 +14,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using SolutionCreator.Dto;
+using System;
+
 namespace SolutionCreator
 {
     public interface ICreator
     {
+        event EventHandler<FileProcessingProgressDto> FileProcessingProgress;
         void Create(string sourceDir, string destinationBaseDir, string newSolutionName);
     }
 }

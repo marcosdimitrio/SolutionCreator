@@ -14,6 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using SolutionCreator.Dto;
 using SolutionCreator.SolutionProcessor.Factory.Interfaces;
 using System;
 using System.IO;
@@ -23,6 +24,8 @@ namespace SolutionCreator
     public class Creator : ICreator
     {
         private readonly ISolutionProcessorFactory SolutionProcessorFactory;
+
+        public event EventHandler<FileProcessingProgressDto> FileProcessingProgress;
 
         public Creator(ISolutionProcessorFactory solutionProcessorFactory)
         {
@@ -37,7 +40,14 @@ namespace SolutionCreator
 
             var solutionProcessor = SolutionProcessorFactory.Get(sourceDir);
 
+            solutionProcessor.FileProcessingProgress += RaiseFileProcessingProgressEvent;
+
             solutionProcessor.Create(sourceDir, destinationDir, newSolutionName);
+        }
+
+        private void RaiseFileProcessingProgressEvent(object sender, FileProcessingProgressDto dto)
+        {
+            FileProcessingProgress?.Invoke(this, dto);
         }
 
         private void ValidateDestinationFolder(string folder)

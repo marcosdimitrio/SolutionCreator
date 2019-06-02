@@ -14,11 +14,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace SolutionCreator.Enum
+using SolutionCreator.Dto;
+using SolutionCreator.Enums;
+using System;
+
+namespace SolutionCreator.Interfaces
 {
-    public enum TypeOfComparison
+    public interface IFileCopy
     {
-        File,
-        Directory,
+        event EventHandler<FileProcessingProgressDto> FileProcessingProgress;
+        void Copy(SolutionType solutionType, string sourceDir, string targetDir, SolutionName solutionName);
     }
 }

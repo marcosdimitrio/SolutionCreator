@@ -14,12 +14,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using SolutionCreator.Dto;
-
-namespace SolutionCreator
+namespace SolutionCreator.Enums
 {
-    public interface IFileCopy
+    public enum TypeOfComparison
     {
-        void Copy(string sourceDir, string targetDir, SolutionName solutionName);
+        File,
+        Directory,
     }
 }

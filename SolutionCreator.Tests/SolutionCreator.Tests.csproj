@@ -65,7 +65,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="GitIgnoreFilterTest.cs" />
+    <Compile Include="GitIgnoreFilterMvcTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

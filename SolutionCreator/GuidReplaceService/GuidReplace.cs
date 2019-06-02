@@ -89,8 +89,6 @@ namespace SolutionCreator.GuidReplaceService
                     newText = newText.ReplaceIgnoreCase(projectGuid.OldGuid, projectGuid.NewGuid);
                 }
 
-                newText = newText.ReplaceIgnoreCase(solutionName.OldName, solutionName.NewName);
-
                 if (newText != text)
                 {
                     File.WriteAllText(file, newText, Encoding.UTF8);

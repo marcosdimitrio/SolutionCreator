@@ -4,12 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SolutionCreator.Wpf"
-        Title="{Binding Title}" Height="236.623" Width="631.747" ResizeMode="NoResize" 
+        Title="{Binding Title}" Height="252" Width="631.747" ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen"
         DataContext="{Binding Source={StaticResource ServiceLocator}, Path=MainWindowViewModel}">
     <Window.Resources>
     </Window.Resources>
-    <Canvas>
+    <Canvas Margin="0,0,0,0">
         <Label x:Name="label1" Content="Source" Canvas.Left="90" Canvas.Top="30" HorizontalAlignment="Right"/>
         <Label x:Name="label2" Content="Destination" Canvas.Left="66" Canvas.Top="69" HorizontalAlignment="Right"/>
         <Label x:Name="label3" Content="New Solution Name" Canvas.Left="20" Canvas.Top="108" HorizontalAlignment="Right"/>
@@ -19,5 +19,10 @@
         <Button Content="Generate" Command="{Binding Path=GenerateCommand}" Visibility="{Binding Path=IsRunning}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="92" Height="26" Canvas.Left="141" Canvas.Top="153"/>
         <Button Content="Browse" Canvas.Left="550" Canvas.Top="33" Width="54" Command="{Binding Path=SourceDialogCommand}"/>
         <Button Content="Browse" Canvas.Left="550" Canvas.Top="72" Width="54" Command="{Binding Path=DestinationDialogCommand}"/>
+        <StatusBar Height="24" Width="626" Canvas.Top="190">
+            <StatusBarItem>
+                <TextBlock Name="StatusMessage" Text="{Binding Path=StatusMessage}" />
+            </StatusBarItem>
+        </StatusBar>
     </Canvas>
 </Window>

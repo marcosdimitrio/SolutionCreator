@@ -100,7 +100,13 @@ namespace SolutionCreator.Wpf.ViewModel
             Creator = creator;
             DialogServices = dialogServices;
 
+            Creator.FileProcessingProgress += HandleFileProcessingProgress;
             defaultsService.SetDefaults(this);
+        }
+
+        private void HandleFileProcessingProgress(object sender, Dto.FileProcessingProgressDto e)
+        {
+            StatusMessage = e.Message;
         }
 
         private async void Generate()
@@ -136,8 +142,8 @@ namespace SolutionCreator.Wpf.ViewModel
             }
             else
             {
-                MessagingService.Show("Done!", "Generate", MessagingImage.Information);
                 StatusMessage = "Done.";
+                MessagingService.Show("Done!", "Generate", MessagingImage.Information);
             }
 
         }

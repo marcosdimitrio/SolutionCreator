@@ -14,13 +14,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using SolutionCreator.GitIgnore;
+using SolutionCreator.GitIgnore.Filter.Mvc;
 using Xunit;
 
 namespace SolutionCreator.Tests
 {
 
-    public class GitIgnoreFilterTest
+    public class GitIgnoreFilterMvcTest
     {
 
         public class AcceptsMethod
@@ -51,10 +51,10 @@ namespace SolutionCreator.Tests
             {
 
                 // Arrange
-                var gitIgnoreFilter = new GitIgnoreFilter();
+                var gitIgnoreFilter = new GitIgnoreFilterMvc();
 
                 // Act
-                var test = gitIgnoreFilter.Accepts(file, false);
+                var test = gitIgnoreFilter.AcceptsFile(file);
 
                 // Assert
                 Assert.True(test);
@@ -69,10 +69,10 @@ namespace SolutionCreator.Tests
             {
 
                 // Arrange
-                var gitIgnoreFilter = new GitIgnoreFilter();
+                var gitIgnoreFilter = new GitIgnoreFilterMvc();
 
                 // Act
-                var test = gitIgnoreFilter.Accepts(file, true);
+                var test = gitIgnoreFilter.AcceptsFolder(file);
 
                 // Assert
                 Assert.True(test);
@@ -109,10 +109,10 @@ namespace SolutionCreator.Tests
             {
 
                 // Arrange
-                var gitIgnoreFilter = new GitIgnoreFilter();
+                var gitIgnoreFilter = new GitIgnoreFilterMvc();
 
                 // Act
-                var test = gitIgnoreFilter.Accepts(file, false);
+                var test = gitIgnoreFilter.AcceptsFile(file);
 
                 // Assert
                 Assert.False(test);
@@ -135,10 +135,10 @@ namespace SolutionCreator.Tests
             {
 
                 // Arrange
-                var gitIgnoreFilter = new GitIgnoreFilter();
+                var gitIgnoreFilter = new GitIgnoreFilterMvc();
 
                 // Act
-                var test = gitIgnoreFilter.Accepts(file, true);
+                var test = gitIgnoreFilter.AcceptsFolder(file);
 
                 // Assert
                 Assert.False(test);
@@ -153,10 +153,10 @@ namespace SolutionCreator.Tests
             {
 
                 // Arrange
-                var gitIgnoreFilter = new GitIgnoreFilter();
+                var gitIgnoreFilter = new GitIgnoreFilterMvc();
 
                 // Act
-                var test = gitIgnoreFilter.Accepts(file, true);
+                var test = gitIgnoreFilter.AcceptsFolder(file);
 
                 // Assert
                 Assert.True(test);

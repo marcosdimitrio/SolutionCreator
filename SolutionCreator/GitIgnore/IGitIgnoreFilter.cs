@@ -18,6 +18,7 @@ namespace SolutionCreator.GitIgnore
 {
     public interface IGitIgnoreFilter
     {
-        bool Accepts(string filename, bool isFolder);
+        bool AcceptsFile(string filename);
+        bool AcceptsFolder(string foldername);
     }
 }

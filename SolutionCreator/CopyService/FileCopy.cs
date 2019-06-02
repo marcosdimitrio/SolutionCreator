@@ -15,7 +15,11 @@
 // limitations under the License.
 
 using SolutionCreator.Dto;
+using SolutionCreator.Enums;
 using SolutionCreator.GitIgnore;
+using SolutionCreator.GitIgnore.Factory.Interfaces;
+using SolutionCreator.Interfaces;
+using System;
 using System.IO;
 
 namespace SolutionCreator
@@ -23,52 +27,59 @@ namespace SolutionCreator
     // http://stackoverflow.com/questions/58744/copy-the-entire-contents-of-a-directory-in-c-sharp#690980
     public class FileCopy : IFileCopy
     {
-        private readonly IGitIgnoreFilter GitIgnoreFilter;
+        private readonly IGitIgnoreFilterFactory GitIgnoreFilterFactory;
 
-        public FileCopy(IGitIgnoreFilter gitIgnoreFilter)
+        public event EventHandler<FileProcessingProgressDto> FileProcessingProgress;
+
+        public FileCopy(IGitIgnoreFilterFactory gitIgnoreFilterFactory)
         {
-            GitIgnoreFilter = gitIgnoreFilter;
+            GitIgnoreFilterFactory = gitIgnoreFilterFactory;
         }
 
-        public void Copy(string sourceDirectory, string targetDirectory, SolutionName solutionName)
+        public void Copy(SolutionType solutionType, string sourceDirectory, string targetDirectory, SolutionName solutionName)
         {
             var diSource = new DirectoryInfo(sourceDirectory);
             var diTarget = new DirectoryInfo(targetDirectory);
 
-            CopyAll(diSource, diTarget, solutionName);
+            var gitIgnoreFilter = GitIgnoreFilterFactory.Get(solutionType);
+
+            CopyAll(gitIgnoreFilter, diSource, diTarget, solutionName);
+
+            RaiseEmptyFileProcessingProgressMessage();
         }
 
-        private void CopyAll(DirectoryInfo source, DirectoryInfo target, SolutionName solutionName)
+        private void CopyAll(IGitIgnoreFilter gitIgnoreFilter, DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory, SolutionName solutionName)
         {
-
-            if (GitIgnoreFilter.Accepts(target.FullName, true))
+            if (gitIgnoreFilter.AcceptsFolder(targetDirectory.FullName))
             {
-                Directory.CreateDirectory(target.FullName);
+                Directory.CreateDirectory(targetDirectory.FullName);
 
                 // Copy each file into the new directory.
-                foreach (FileInfo fi in source.GetFiles())
+                foreach (var fileInfo in sourceDirectory.GetFiles())
                 {
-                    var newName = AdaptName(fi.Name, solutionName);
+                    var newName = AdaptName(fileInfo.Name, solutionName);
 
-                    var newPath = Path.Combine(target.FullName, newName);
+                    var newPath = Path.Combine(targetDirectory.FullName, newName);
 
-                    if (GitIgnoreFilter.Accepts(newPath, false))
+                    if (gitIgnoreFilter.AcceptsFile(newPath))
                     {
-                        fi.CopyTo(newPath, true);
+                        RaiseFileProcessingProgressForFile(newPath);
+
+                        fileInfo.CopyTo(newPath, true);
                     }
                 }
 
                 // Copy each subdirectory using recursion.
-                foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
+                foreach (var subDirectoryInfo in sourceDirectory.GetDirectories())
                 {
 
-                    if (GitIgnoreFilter.Accepts(diSourceSubDir.FullName, true))
+                    if (gitIgnoreFilter.AcceptsFolder(subDirectoryInfo.FullName))
                     {
-                        var newName = AdaptName(diSourceSubDir.Name, solutionName);
+                        var newName = AdaptName(subDirectoryInfo.Name, solutionName);
 
-                        var nextTargetSubDir = target.CreateSubdirectory(newName);
+                        var nextTargetSubDir = targetDirectory.CreateSubdirectory(newName);
 
-                        CopyAll(diSourceSubDir, nextTargetSubDir, solutionName);
+                        CopyAll(gitIgnoreFilter, subDirectoryInfo, nextTargetSubDir, solutionName);
                     }
 
                 }
@@ -76,9 +87,19 @@ namespace SolutionCreator
 
         }
 
+        private void RaiseFileProcessingProgressForFile(string newPath)
+        {
+            FileProcessingProgress?.Invoke(this, new FileProcessingProgressDto() { Message = $"Copying {newPath}" });
+        }
+
         private string AdaptName(string name, SolutionName solutionName)
         {
             return name.Replace(solutionName.OldName, solutionName.NewName);
+        }
+
+        private void RaiseEmptyFileProcessingProgressMessage()
+        {
+            FileProcessingProgress?.Invoke(this, new FileProcessingProgressDto() { Message = "" });
         }
 
     }
