@@ -80,7 +80,14 @@ namespace SolutionCreator.GuidReplaceService
 
             foreach (var file in allFiles)
             {
-                var text = File.ReadAllText(file);
+                string text;
+                Encoding encoding;
+
+                using (var reader = new StreamReader(file))
+                {
+                    text = reader.ReadToEnd();
+                    encoding = reader.CurrentEncoding;
+                }
 
                 var newText = text;
 
@@ -91,7 +98,7 @@ namespace SolutionCreator.GuidReplaceService
 
                 if (newText != text)
                 {
-                    File.WriteAllText(file, newText, Encoding.UTF8);
+                    File.WriteAllText(file, newText, encoding);
                 }
             }
 
