@@ -35,7 +35,7 @@ namespace SolutionCreator.SolutionNameReplacerService
 
                 if (newText != text)
                 {
-                    File.WriteAllText(file, newText, encoding);
+                    File.WriteAllBytes(file, encoding.GetBytes(newText));
                 }
             }
 
