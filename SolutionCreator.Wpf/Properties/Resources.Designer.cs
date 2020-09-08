@@ -59,15 +59,5 @@ namespace SolutionCreator.Wpf.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        /// </summary>
-        internal static System.Drawing.Icon solution_creator {
-            get {
-                object obj = ResourceManager.GetObject("solution_creator", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
     }
 }

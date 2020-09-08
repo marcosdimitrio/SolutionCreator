@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:SolutionCreator.Wpf"
         Title="{Binding Title}" Height="252" Width="631.747" ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen"
-        DataContext="{Binding Source={StaticResource ServiceLocator}, Path=MainWindowViewModel}" Icon="/SolutionCreator.Wpf;component/Resources/solution creator.ico">
+        DataContext="{Binding Source={StaticResource ServiceLocator}, Path=MainWindowViewModel}">
     <Window.Resources>
     </Window.Resources>
     <Canvas Margin="0,0,0,0">
