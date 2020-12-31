@@ -3,21 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionCreator.Wpf", "SolutionCreator.Wpf\SolutionCreator.Wpf.csproj", "{2A48A993-8CF5-4690-8822-29838F3EC0ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionCreator.Wpf", "src\SolutionCreator.Wpf\SolutionCreator.Wpf.csproj", "{2A48A993-8CF5-4690-8822-29838F3EC0ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionCreator", "SolutionCreator\SolutionCreator.csproj", "{E4C9B660-BEEE-4E38-B02E-F4921FC93623}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionCreator", "src\SolutionCreator\SolutionCreator.csproj", "{E4C9B660-BEEE-4E38-B02E-F4921FC93623}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionCreator.Tests", "SolutionCreator.Tests\SolutionCreator.Tests.csproj", "{326C7807-4A23-4822-A1B0-D20BF10C6B45}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionCreator.Tests", "src\SolutionCreator.Tests\SolutionCreator.Tests.csproj", "{326C7807-4A23-4822-A1B0-D20BF10C6B45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionCreator.Helpers", "SolutionCreator.Helpers\SolutionCreator.Helpers.csproj", "{16F2C0AE-00BD-4B45-AF1F-26064F9CC75F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionCreator.Helpers", "src\SolutionCreator.Helpers\SolutionCreator.Helpers.csproj", "{16F2C0AE-00BD-4B45-AF1F-26064F9CC75F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionCreator.IoC", "SolutionCreator.IoC\SolutionCreator.IoC.csproj", "{1784416F-0B2B-4615-9E6E-20BFF38C98E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionCreator.IoC", "src\SolutionCreator.IoC\SolutionCreator.IoC.csproj", "{1784416F-0B2B-4615-9E6E-20BFF38C98E4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{35A6CAB1-90BE-48E3-8485-9847D260EAE4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{C5AA8889-711C-482D-BA88-9BBB64D6E47E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionCreator.Infra.Settings", "SolutionCreator.Infra.Settings\SolutionCreator.Infra.Settings.csproj", "{6089F12E-BE28-4C33-BC85-05940A9D9239}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionCreator.Infra.Settings", "src\SolutionCreator.Infra.Settings\SolutionCreator.Infra.Settings.csproj", "{6089F12E-BE28-4C33-BC85-05940A9D9239}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

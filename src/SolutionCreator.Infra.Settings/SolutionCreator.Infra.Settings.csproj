@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1784416F-0B2B-4615-9E6E-20BFF38C98E4}</ProjectGuid>
+    <ProjectGuid>{6089F12E-BE28-4C33-BC85-05940A9D9239}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SolutionCreator.IoC</RootNamespace>
-    <AssemblyName>SolutionCreator.IoC</AssemblyName>
+    <RootNamespace>SolutionCreator.Infra.Settings</RootNamespace>
+    <AssemblyName>SolutionCreator.Infra.Settings</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,24 +30,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SimpleInjector, Version=4.6.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\packages\SimpleInjector.4.6.0\lib\net45\SimpleInjector.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SolutionCreatorMappings.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SolutionCreator.Infra.Settings\SolutionCreator.Infra.Settings.csproj">
-      <Project>{6089F12E-BE28-4C33-BC85-05940A9D9239}</Project>
-      <Name>SolutionCreator.Infra.Settings</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SolutionCreator\SolutionCreator.csproj">
-      <Project>{e4c9b660-beee-4e38-b02e-f4921fc93623}</Project>
-      <Name>SolutionCreator</Name>
-    </ProjectReference>
+    <Compile Include="Interfaces\ISettingsReader.cs" />
+    <Compile Include="SettingsReader.cs" />
+    <Compile Include="Settings\DefaultSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
