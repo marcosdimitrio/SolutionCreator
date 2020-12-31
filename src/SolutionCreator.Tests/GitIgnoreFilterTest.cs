@@ -14,13 +14,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using SolutionCreator.GitIgnore.Filter.Mvc;
 using Xunit;
 
 namespace SolutionCreator.Tests
 {
 
-    public class GitIgnoreFilterMvcTest
+    public class GitIgnoreFilterTest
     {
 
         public class AcceptsMethod
@@ -49,9 +48,8 @@ namespace SolutionCreator.Tests
             [InlineData(@"d:\solution\.gitignore")]                     // .git
             public void MustAcceptTheseFiles(string file)
             {
-
                 // Arrange
-                var gitIgnoreFilter = new GitIgnoreFilterMvc();
+                var gitIgnoreFilter = new GitIgnoreFilterForTest();
 
                 // Act
                 var test = gitIgnoreFilter.AcceptsFile(file);
@@ -67,9 +65,8 @@ namespace SolutionCreator.Tests
             [InlineData(@"d:\solution\TestResul\")]                     // [Tt]est[Rr]esult*/
             public void MustAcceptTheseFolders(string file)
             {
-
                 // Arrange
-                var gitIgnoreFilter = new GitIgnoreFilterMvc();
+                var gitIgnoreFilter = new GitIgnoreFilterForTest();
 
                 // Act
                 var test = gitIgnoreFilter.AcceptsFolder(file);
@@ -107,9 +104,8 @@ namespace SolutionCreator.Tests
             [InlineData(@"d:\solution\.git\abc")]                       // .git
             public void MustRejectTheseFiles(string file)
             {
-
                 // Arrange
-                var gitIgnoreFilter = new GitIgnoreFilterMvc();
+                var gitIgnoreFilter = new GitIgnoreFilterForTest();
 
                 // Act
                 var test = gitIgnoreFilter.AcceptsFile(file);
@@ -133,9 +129,8 @@ namespace SolutionCreator.Tests
             [InlineData(@"d:\solution\.git\abc\")]                      // .git
             public void MustRejectTheseFolders(string file)
             {
-
                 // Arrange
-                var gitIgnoreFilter = new GitIgnoreFilterMvc();
+                var gitIgnoreFilter = new GitIgnoreFilterForTest();
 
                 // Act
                 var test = gitIgnoreFilter.AcceptsFolder(file);
@@ -151,9 +146,8 @@ namespace SolutionCreator.Tests
             [InlineData(@"d:\solution\abc.cache")]                      // !*.[Cc]ache/
             public void MustNotRejectTheseFolders(string file)
             {
-
                 // Arrange
-                var gitIgnoreFilter = new GitIgnoreFilterMvc();
+                var gitIgnoreFilter = new GitIgnoreFilterForTest();
 
                 // Act
                 var test = gitIgnoreFilter.AcceptsFolder(file);

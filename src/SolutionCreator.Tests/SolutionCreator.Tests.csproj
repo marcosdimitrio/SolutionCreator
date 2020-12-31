@@ -65,8 +65,14 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="GitIgnoreFilterMvcTest.cs" />
+    <Compile Include="GitIgnoreFilterForTest.cs" />
+    <Compile Include="GitIgnoreFilterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -76,6 +82,15 @@
       <Project>{E4C9B660-BEEE-4E38-B02E-F4921FC93623}</Project>
       <Name>SolutionCreator</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="IgnoreFileTests.txt" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
