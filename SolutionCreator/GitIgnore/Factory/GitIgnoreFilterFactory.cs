@@ -21,7 +21,7 @@ namespace SolutionCreator.GitIgnore.Factory
         {
             var gitIgnoreFilters = GitIgnoreFilters.Where(x => x.SolutionType == solutionType);
 
-            if (gitIgnoreFilters.Count() == 0) throw new InvalidOperationException($"Couldn't fine a IGitIgnoreFilter implementation to handle the solution type \"{solutionType.Description()}\".");
+            if (gitIgnoreFilters.Count() == 0) throw new InvalidOperationException($"Couldn't find an IGitIgnoreFilter implementation to handle the solution type \"{solutionType.Description()}\".");
 
             if (gitIgnoreFilters.Count() != 1)
             {
