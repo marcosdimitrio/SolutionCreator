@@ -1,7 +1,8 @@
 ﻿using MahApps.Metro.Controls;
-using System;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace SolutionCreator.Wpf
 {
@@ -25,9 +26,10 @@ namespace SolutionCreator.Wpf
             }
         }
 
-        private void MainGrid_AccessKeyPressed(object sender, System.Windows.Input.AccessKeyPressedEventArgs e)
+        private void SolutionNameValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-
+            var regex = new Regex("[^a-zA-Z0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
 
     }

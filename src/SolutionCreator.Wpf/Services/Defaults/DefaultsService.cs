@@ -40,6 +40,7 @@ namespace SolutionCreator.Wpf.Services.Defaults
         {
             mainWindowViewModel.Title = "Solution Creator";
             mainWindowViewModel.NewSolutionName = "NewSolution";
+            mainWindowViewModel.SolutionFolderName = "NewSolution-api";
         }
 
         private void SetUserDefineableDefaults(MainWindowViewModel mainWindowViewModel)

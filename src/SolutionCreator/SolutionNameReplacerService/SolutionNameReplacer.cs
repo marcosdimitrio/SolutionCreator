@@ -31,6 +31,7 @@ namespace SolutionCreator.SolutionNameReplacerService
                 newText = newText.Replace(solutionName.OldName.ToPascalCase(), solutionName.NewName.ToPascalCase());
                 newText = newText.Replace(solutionName.OldName.ToCamelCase(), solutionName.NewName.ToCamelCase());
                 newText = newText.Replace(solutionName.OldName.ToKebabCase(), solutionName.NewName.ToKebabCase());
+                newText = newText.Replace(solutionName.OldName.ToKebabCase().ToUpperInvariant(), solutionName.NewName.ToKebabCase().ToUpperInvariant());
                 newText = newText.Replace(solutionName.OldName.ToSnakeCase(), solutionName.NewName.ToSnakeCase());
 
                 if (newText != text)

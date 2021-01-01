@@ -22,6 +22,6 @@ namespace SolutionCreator
     public interface ICreator
     {
         event EventHandler<FileProcessingProgressDto> FileProcessingProgress;
-        void Create(string sourceDir, string destinationBaseDir, string newSolutionName);
+        void Create(string sourceDir, string destinationDir, string newSolutionName);
     }
 }

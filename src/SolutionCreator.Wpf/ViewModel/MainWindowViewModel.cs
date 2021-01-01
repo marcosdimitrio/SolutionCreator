@@ -20,6 +20,8 @@ using SolutionCreator.Wpf.Services.Defaults;
 using SolutionCreator.Wpf.Services.IO;
 using SolutionCreator.Wpf.Services.MessageExchange;
 using System;
+using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -45,7 +47,10 @@ namespace SolutionCreator.Wpf.ViewModel
         public string DestinationDir { get { return _destinationDir; } set { _destinationDir = value; RaisePropertyChanged(); } }
 
         private string _newSolutionName;
-        public string NewSolutionName { get { return _newSolutionName; } set { _newSolutionName = value; RaisePropertyChanged(); } }
+        public string NewSolutionName { get { return _newSolutionName; } set { _newSolutionName = value; RaisePropertyChanged(); UpdateSolutionFolderName(); } }
+
+        private string _solutionFolderName;
+        public string SolutionFolderName { get { return _solutionFolderName; } set { _solutionFolderName = value; RaisePropertyChanged(); } }
 
         private string _statusMessage;
         public string StatusMessage { get { return _statusMessage; } set { _statusMessage = value; RaisePropertyChanged(); } }
@@ -122,7 +127,9 @@ namespace SolutionCreator.Wpf.ViewModel
                     {
                         try
                         {
-                            Creator.Create(SourceDir, DestinationDir, NewSolutionName);
+                            var destinationDir = Path.Combine(DestinationDir, SolutionFolderName);
+
+                            Creator.Create(SourceDir, destinationDir, NewSolutionName);
                         }
                         catch (Exception ex)
                         {
@@ -145,7 +152,31 @@ namespace SolutionCreator.Wpf.ViewModel
                 StatusMessage = "Done.";
                 MessagingService.Show("Done!", "Generate", MessagingImage.Information);
             }
+        }
 
+        private void UpdateSolutionFolderName()
+        {
+            var prefix = GetCurrentPrefix(SolutionFolderName);
+
+            //if (NewSolutionName != null)
+            //{
+            //    NewSolutionName = NewSolutionName.Replace("-", "");
+            //}
+
+            SolutionFolderName = $"{NewSolutionName}{prefix}";
+        }
+
+        private static string GetCurrentPrefix(string str)
+        {
+            if (str == null) return string.Empty;
+
+            var match = Regex.Match(str, @"(-[^-]*)$");
+
+            if (!match.Success) return string.Empty;
+
+            if (match.Groups[1].Value == "-") return string.Empty;
+
+            return match.Groups[1].Value;
         }
 
     }

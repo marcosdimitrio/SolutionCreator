@@ -32,10 +32,8 @@ namespace SolutionCreator
             SolutionProcessorFactory = solutionProcessorFactory;
         }
 
-        public void Create(string sourceDir, string destinationBaseDir, string newSolutionName)
+        public void Create(string sourceDir, string destinationDir, string newSolutionName)
         {
-            var destinationDir = Path.Combine(destinationBaseDir, newSolutionName);
-
             ValidateDestinationFolder(destinationDir);
 
             var solutionProcessor = SolutionProcessorFactory.Get(sourceDir);
@@ -54,7 +52,7 @@ namespace SolutionCreator
         {
             if (string.IsNullOrWhiteSpace(folder)) throw new ArgumentNullException(nameof(folder));
 
-            if (Directory.Exists(folder)) throw new DirectoryNotFoundException("The provided folder already exists.");
+            if (Directory.Exists(folder)) throw new InvalidOperationException("The provided folder already exists.");
         }
 
     }
