@@ -29,5 +29,17 @@ namespace SolutionCreator.Helpers
                 RegexOptions.IgnoreCase
             );
         }
+
+        public static string TrimStart(this string str, string trimString)
+        {
+            if (trimString == null) return str;
+
+            if (str.StartsWith(trimString))
+            {
+                return str.Substring(trimString.Length);
+            }
+
+            return str;
+        }
     }
 }

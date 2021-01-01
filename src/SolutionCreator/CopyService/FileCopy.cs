@@ -18,6 +18,7 @@ using SolutionCreator.Dto;
 using SolutionCreator.Enums;
 using SolutionCreator.GitIgnore;
 using SolutionCreator.GitIgnore.Factory.Interfaces;
+using SolutionCreator.Helpers;
 using SolutionCreator.Interfaces;
 using System;
 using System.IO;
@@ -43,12 +44,12 @@ namespace SolutionCreator
 
             var gitIgnoreFilter = GitIgnoreFilterFactory.Get(solutionType);
 
-            CopyAll(gitIgnoreFilter, diSource, diTarget, solutionName);
+            CopyAll(gitIgnoreFilter, diSource, diTarget, diSource, diTarget, solutionName);
 
             RaiseEmptyFileProcessingProgressMessage();
         }
 
-        private void CopyAll(IGitIgnoreFilter gitIgnoreFilter, DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory, SolutionName solutionName)
+        private void CopyAll(IGitIgnoreFilter gitIgnoreFilter, DirectoryInfo rootSourceDirectory, DirectoryInfo rootTargetDirectory, DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory, SolutionName solutionName)
         {
             if (gitIgnoreFilter.AcceptsFolder(targetDirectory.FullName))
             {
@@ -61,7 +62,9 @@ namespace SolutionCreator
 
                     var newPath = Path.Combine(targetDirectory.FullName, newName);
 
-                    if (gitIgnoreFilter.AcceptsFile(newPath))
+                    var filepathForGitIgnoreCheck = RemoveRootDirFromPath(rootTargetDirectory, newPath);
+
+                    if (gitIgnoreFilter.AcceptsFile(filepathForGitIgnoreCheck))
                     {
                         RaiseFileProcessingProgressForFile(newPath);
 
@@ -72,19 +75,25 @@ namespace SolutionCreator
                 // Copy each subdirectory using recursion.
                 foreach (var subDirectoryInfo in sourceDirectory.GetDirectories())
                 {
+                    var folderForGitIgnoreCheck = RemoveRootDirFromPath(rootSourceDirectory, subDirectoryInfo.FullName);
 
-                    if (gitIgnoreFilter.AcceptsFolder(subDirectoryInfo.FullName))
+                    if (gitIgnoreFilter.AcceptsFolder(folderForGitIgnoreCheck))
                     {
                         var newName = AdaptName(subDirectoryInfo.Name, solutionName);
 
                         var nextTargetSubDir = targetDirectory.CreateSubdirectory(newName);
 
-                        CopyAll(gitIgnoreFilter, subDirectoryInfo, nextTargetSubDir, solutionName);
+                        CopyAll(gitIgnoreFilter, rootSourceDirectory, rootTargetDirectory, subDirectoryInfo, nextTargetSubDir, solutionName);
                     }
 
                 }
             }
 
+        }
+
+        private string RemoveRootDirFromPath(DirectoryInfo rootDirectory, string newPath)
+        {
+            return newPath.TrimStart($"{rootDirectory.FullName}\\");
         }
 
         private void RaiseFileProcessingProgressForFile(string newPath)

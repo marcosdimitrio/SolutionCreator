@@ -38,7 +38,6 @@ namespace SolutionCreator.GitIgnore
 
         public bool IsMatch(string filename, bool isDirectory)
         {
-
             var filenameToMatch = ReplaceBackSlashesWithForwardSlashes(filename);
 
             if (isDirectory)
@@ -55,10 +54,23 @@ namespace SolutionCreator.GitIgnore
             Negation = false;
             GeneratedRegex = OriginalPattern;
 
+            var shouldMatchFromRoot = false;
+
             if (GeneratedRegex.StartsWith("!", StringComparison.InvariantCultureIgnoreCase))
             {
                 GeneratedRegex = GeneratedRegex.TrimStart('!');
                 Negation = true;
+            }
+
+            if (GeneratedRegex.StartsWith("**/", StringComparison.InvariantCultureIgnoreCase))
+            {
+                GeneratedRegex = GeneratedRegex.Substring(3);
+            }
+
+            if (GeneratedRegex.StartsWith("/", StringComparison.InvariantCultureIgnoreCase))
+            {
+                GeneratedRegex = GeneratedRegex.TrimStart('/');
+                shouldMatchFromRoot = true;
             }
 
             if (GeneratedRegex.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))
@@ -79,7 +91,9 @@ namespace SolutionCreator.GitIgnore
 
             GeneratedRegex = TransformSingleAsterisk(GeneratedRegex);
 
-            GeneratedRegex = AddRegexSurroundings(GeneratedRegex);
+            GeneratedRegex = AddRegexStart(GeneratedRegex, shouldMatchFromRoot);
+
+            GeneratedRegex = AddRegexTrailing(GeneratedRegex);
         }
 
         private static string ReplaceBackSlashesWithForwardSlashes(string str)
@@ -93,6 +107,7 @@ namespace SolutionCreator.GitIgnore
             {
                 return string.Concat(str, '/');
             }
+
             return str;
         }
 
@@ -118,28 +133,32 @@ namespace SolutionCreator.GitIgnore
 
         private string TransformDoubleAsterisks(string regex)
         {
-            return regex.Replace("**", ".*");
+            return regex.Replace("**", ".{0,}");
         }
 
         private string TransformSingleAsterisk(string regex)
         {
-            return regex.Replace("*", "[^/]*");
+            return regex.Replace("*", "[^/]{0,}");
         }
 
-        private string AddRegexSurroundings(string regex)
+        private string AddRegexStart(string regex, bool shouldMatchFromRoot)
         {
-            regex = $"(?:^|/){regex}";
+            if (shouldMatchFromRoot)
+            {
+                return $"^{regex}";
+            }
 
+            return $"(?:^|/){regex}";
+        }
+
+        private string AddRegexTrailing(string regex)
+        {
             if (Comparison == TypeOfComparison.Directory)
             {
-                regex = $@"{regex}\/";
-            }
-            else
-            {
-                regex = $@"{regex}(?:$|\/)";
+                return $@"{regex}\/";
             }
 
-            return regex;
+            return $@"{regex}(?:$|\/)";
         }
 
     }

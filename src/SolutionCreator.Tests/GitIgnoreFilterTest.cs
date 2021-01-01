@@ -26,26 +26,27 @@ namespace SolutionCreator.Tests
         {
 
             [Theory]
-            [InlineData(@"d:\solution\abc.sln")]                        // *.sln
-            [InlineData(@"d:\solution\someProject\abc.cs")]             // *.cs
-            [InlineData(@"d:\solution\someProject\abc.csproj")]         // *.csproj
-            [InlineData(@"d:\solution\someProject\abc.txt")]            // *.txt
-            [InlineData(@"d:\solution\abc.suos")]                       // *.suo
-            [InlineData(@"d:\solution\abc.sln.docstate")]               // *.sln.docstates
-            [InlineData(@"d:\solution\.vs")]                            // .vs/
-            [InlineData(@"d:\solution\BuildLog")]                       // [Bb]uild[Ll]og.*
-            [InlineData(@"d:\solution\TestResult.txt")]                 // TestResult.xml
-            [InlineData(@"d:\solution\project.lock.json.file")]         // project.lock.json
-            [InlineData(@"d:\solution\_Chutzpa")]                       // _Chutzpah*
-            [InlineData(@"d:\solution\Chutzpah")]                       // _Chutzpah*
-            [InlineData(@"d:\solution\mm.abc")]                         // *.mm.*
-            [InlineData(@"d:\solution\abc.mm")]                         // *.mm.*
-            [InlineData(@"d:\solution\.crunc.local.xml")]               // .*crunch*.local.xml
-            [InlineData(@"d:\solution\DocProject\Help\HxT")]            // DocProject/Help/*.HxT
-            [InlineData(@"d:\solution\Publish.xml")]                    // *.[Pp]ublish.xml
-            [InlineData(@"d:\solution\~a$")]                            // ~$*
-            [InlineData(@"d:\solution\a~a")]                            // *~
-            [InlineData(@"d:\solution\.gitignore")]                     // .git
+            [InlineData(@"abc.sln")]                        // *.sln
+            [InlineData(@"someProject\abc.cs")]             // *.cs
+            [InlineData(@"someProject\abc.csproj")]         // *.csproj
+            [InlineData(@"someProject\abc.txt")]            // *.txt
+            [InlineData(@"abc.suos")]                       // *.suo
+            [InlineData(@"abc.sln.docstate")]               // *.sln.docstates
+            [InlineData(@".vs")]                            // .vs/
+            [InlineData(@"BuildLog")]                       // [Bb]uild[Ll]og.*
+            [InlineData(@"TestResult.txt")]                 // TestResult.xml
+            [InlineData(@"project.lock.json.file")]         // project.lock.json
+            [InlineData(@"_Chutzpa")]                       // _Chutzpah*
+            [InlineData(@"Chutzpah")]                       // _Chutzpah*
+            [InlineData(@"mm.abc")]                         // *.mm.*
+            [InlineData(@"abc.mm")]                         // *.mm.*
+            [InlineData(@".crunc.local.xml")]               // .*crunch*.local.xml
+            [InlineData(@"DocProject\Help\HxT")]            // DocProject/Help/*.HxT
+            [InlineData(@"Publish.xml")]                    // *.[Pp]ublish.xml
+            [InlineData(@"~a$")]                            // ~$*
+            [InlineData(@"a~a")]                            // *~
+            [InlineData(@".gitignore")]                     // .git
+            [InlineData(@"someFolder\dist")]                // /dist
             public void MustAcceptTheseFiles(string file)
             {
                 // Arrange
@@ -59,10 +60,11 @@ namespace SolutionCreator.Tests
             }
 
             [Theory]
-            [InlineData(@"d:\solution\Debugs\")]                        // [Dd]ebug/
-            [InlineData(@"d:\solution\builds\s")]                       // build/
-            [InlineData(@"d:\solution\ab.vs\")]                         // .vs/
-            [InlineData(@"d:\solution\TestResul\")]                     // [Tt]est[Rr]esult*/
+            [InlineData(@"Debugs\")]                        // [Dd]ebug/
+            [InlineData(@"builds\s")]                       // build/
+            [InlineData(@"ab.vs\")]                         // .vs/
+            [InlineData(@"TestResul\")]                     // [Tt]est[Rr]esult*/
+            [InlineData(@"someFolder\dist\")]               // /dist
             public void MustAcceptTheseFolders(string file)
             {
                 // Arrange
@@ -76,32 +78,33 @@ namespace SolutionCreator.Tests
             }
 
             [Theory]
-            [InlineData(@"d:\solution\abc.suo")]                        // *.suo
-            [InlineData(@"d:\solution\abc.sln.docstates")]              // *.sln.docstates
-            [InlineData(@"d:\solution\build\abc")]                      // build/
-            [InlineData(@"d:\solution\build\abc.txt")]                  // build/
-            [InlineData(@"d:\solution\BuildLog.txt")]                   // [Bb]uild[Ll]og.*
-            [InlineData(@"d:\solution\TestResult.xml")]                 // TestResult.xml
-            [InlineData(@"d:\solution\project.lock.json")]              // project.lock.json
-            [InlineData(@"d:\solution\_i.c")]                           // *_i.c
-            [InlineData(@"d:\solution\abc_i.c")]                        // *_i.c
-            [InlineData(@"d:\solution\_Chutzpah")]                      // _Chutzpah*
-            [InlineData(@"d:\solution\_ChutzpahAbc")]                   // _Chutzpah*
-            [InlineData(@"d:\solution\abc.mm.abc")]                     // *.mm.*
-            [InlineData(@"d:\solution\.crunch.local.xml")]              // .*crunch*.local.xml
-            [InlineData(@"d:\solution\.crunchAbc.local.xml")]           // .*crunch*.local.xml
-            [InlineData(@"d:\solution\.Abccrunch.local.xml")]           // .*crunch*.local.xml
-            [InlineData(@"d:\solution\.AbccrunchAbc.local.xml")]        // .*crunch*.local.xml
-            [InlineData(@"d:\solution\DocProject\buildhelp\a")]         // DocProject/buildhelp/
-            [InlineData(@"d:\solution\DocProject\Help\Abc.HxT")]        // DocProject/Help/*.HxT
-            [InlineData(@"d:\solution\Abc.Publish.xml")]                // *.[Pp]ublish.xml
-            [InlineData(@"d:\solution\~$")]                             // ~$*
-            [InlineData(@"d:\solution\~$Abc")]                          // ~$*
-            [InlineData(@"d:\solution\~")]                              // *~
-            [InlineData(@"d:\solution\Abc~")]                           // *~
-            [InlineData(@"d:\solution\packages\a")]                     // **/packages/*
-            [InlineData(@"d:\solution\.git")]                           // .git
-            [InlineData(@"d:\solution\.git\abc")]                       // .git
+            [InlineData(@"abc.suo")]                        // *.suo
+            [InlineData(@"abc.sln.docstates")]              // *.sln.docstates
+            [InlineData(@"build\abc")]                      // build/
+            [InlineData(@"build\abc.txt")]                  // build/
+            [InlineData(@"BuildLog.txt")]                   // [Bb]uild[Ll]og.*
+            [InlineData(@"TestResult.xml")]                 // TestResult.xml
+            [InlineData(@"project.lock.json")]              // project.lock.json
+            [InlineData(@"_i.c")]                           // *_i.c
+            [InlineData(@"abc_i.c")]                        // *_i.c
+            [InlineData(@"_Chutzpah")]                      // _Chutzpah*
+            [InlineData(@"_ChutzpahAbc")]                   // _Chutzpah*
+            [InlineData(@"abc.mm.abc")]                     // *.mm.*
+            [InlineData(@".crunch.local.xml")]              // .*crunch*.local.xml
+            [InlineData(@".crunchAbc.local.xml")]           // .*crunch*.local.xml
+            [InlineData(@".Abccrunch.local.xml")]           // .*crunch*.local.xml
+            [InlineData(@".AbccrunchAbc.local.xml")]        // .*crunch*.local.xml
+            [InlineData(@"DocProject\buildhelp\a")]         // DocProject/buildhelp/
+            [InlineData(@"DocProject\Help\Abc.HxT")]        // DocProject/Help/*.HxT
+            [InlineData(@"Abc.Publish.xml")]                // *.[Pp]ublish.xml
+            [InlineData(@"~$")]                             // ~$*
+            [InlineData(@"~$Abc")]                          // ~$*
+            [InlineData(@"~")]                              // *~
+            [InlineData(@"Abc~")]                           // *~
+            [InlineData(@"packages\a")]                     // **/packages/*
+            [InlineData(@".git")]                           // .git
+            [InlineData(@".git\abc")]                       // .git
+            [InlineData(@"dist")]                           // /dist
             public void MustRejectTheseFiles(string file)
             {
                 // Arrange
@@ -115,18 +118,19 @@ namespace SolutionCreator.Tests
             }
 
             [Theory]
-            [InlineData(@"d:\solution\Debug\")]                         // [Dd]ebug/
-            [InlineData(@"d:\solution\build\")]                         // build/
-            [InlineData(@"d:\solution\.vs\")]                           // .vs/
-            [InlineData(@"d:\solution\testresult\")]                    // [Tt]est[Rr]esult*/
-            [InlineData(@"d:\solution\TestResult\")]                    // [Tt]est[Rr]esult*/
-            [InlineData(@"d:\solution\TestResults\")]                   // [Tt]est[Rr]esult*/
-            [InlineData(@"d:\solution\DocProject\buildhelp\")]          // DocProject/buildhelp/
-            [InlineData(@"d:\solution\packages\")]                      // **/packages/*
-            [InlineData(@"d:\solution\.git")]                           // .git
-            [InlineData(@"d:\solution\.git\")]                          // .git
-            [InlineData(@"d:\solution\.git\abc")]                       // .git
-            [InlineData(@"d:\solution\.git\abc\")]                      // .git
+            [InlineData(@"Debug\")]                         // [Dd]ebug/
+            [InlineData(@"build\")]                         // build/
+            [InlineData(@".vs\")]                           // .vs/
+            [InlineData(@"testresult\")]                    // [Tt]est[Rr]esult*/
+            [InlineData(@"TestResult\")]                    // [Tt]est[Rr]esult*/
+            [InlineData(@"TestResults\")]                   // [Tt]est[Rr]esult*/
+            [InlineData(@"DocProject\buildhelp\")]          // DocProject/buildhelp/
+            [InlineData(@"packages\")]                      // **/packages/*
+            [InlineData(@".git")]                           // .git
+            [InlineData(@".git\")]                          // .git
+            [InlineData(@".git\abc")]                       // .git
+            [InlineData(@".git\abc\")]                      // .git
+            [InlineData(@"dist\")]                          // /dist
             public void MustRejectTheseFolders(string file)
             {
                 // Arrange
@@ -140,10 +144,10 @@ namespace SolutionCreator.Tests
             }
 
             [Theory]
-            [InlineData(@"d:\solution\packages\build\")]                // !**/packages/build/
-            [InlineData(@"d:\solution\packages\build\abc")]             // !**/packages/build/
-            [InlineData(@"d:\solution\packages\build\abc.*")]           // !**/packages/build/
-            [InlineData(@"d:\solution\abc.cache")]                      // !*.[Cc]ache/
+            [InlineData(@"packages\build\")]                // !**/packages/build/
+            [InlineData(@"packages\build\abc")]             // !**/packages/build/
+            [InlineData(@"packages\build\abc.*")]           // !**/packages/build/
+            [InlineData(@"abc.cache")]                      // !*.[Cc]ache/
             public void MustNotRejectTheseFolders(string file)
             {
                 // Arrange
